@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,9 +14,33 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        [DllImport("ntdll.dll", PreserveSig = false)]
+        public static extern void NtSuspendProcess(IntPtr processHandle);
+        [DllImport("ntdll.dll", PreserveSig = false)]
+        public static extern void NtResumeProcess(IntPtr processHandle);
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void suspend()
+        {
+            var processes = Process.GetProcessesByName("opera");
+            foreach (var item in processes)
+            {
+                IntPtr h = item.Handle;
+                NtSuspendProcess(h);
+            }
+        }
+
+        private void resume()
+        {
+            var processes = Process.GetProcessesByName("opera");
+            foreach (var item in processes)
+            {
+                IntPtr h = item.Handle;
+                NtResumeProcess(h);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -29,11 +54,7 @@ namespace WindowsFormsApp1
             this.button1.Enabled = false;
             this.label1.Text = "Creating solo public session";
 
-            Process p = new Process();
-            p.StartInfo.FileName = "pssuspend";
-            p.StartInfo.Arguments = "opera";
-            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            p.Start();
+            this.suspend();
 
             this.timer1.Start(); 
         }
@@ -43,21 +64,16 @@ namespace WindowsFormsApp1
             this.button1.Enabled = true;
             this.label1.Text = "READY";
 
-            Process p = new Process();
-            p.StartInfo.FileName = "pssuspend";
-            p.StartInfo.Arguments = "opera -r";
-            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            p.Start();
+            this.resume();
+
             this.timer1.Stop();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var processes = Process.GetProcessesByName("opera");
-            foreach (var item in processes)
-            {
-                
-            }
+            
+            
+            
         }
     }
 }
