@@ -18,6 +18,7 @@ namespace WindowsFormsApp1
         public static extern void NtSuspendProcess(IntPtr processHandle);
         [DllImport("ntdll.dll", PreserveSig = false)]
         public static extern void NtResumeProcess(IntPtr processHandle);
+
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +26,7 @@ namespace WindowsFormsApp1
 
         private void suspend()
         {
-            var processes = Process.GetProcessesByName("opera");
+            var processes = Process.GetProcessesByName("gta5");
             foreach (var item in processes)
             {
                 IntPtr h = item.Handle;
@@ -35,7 +36,7 @@ namespace WindowsFormsApp1
 
         private void resume()
         {
-            var processes = Process.GetProcessesByName("opera");
+            var processes = Process.GetProcessesByName("gta5");
             foreach (var item in processes)
             {
                 IntPtr h = item.Handle;
@@ -72,7 +73,7 @@ namespace WindowsFormsApp1
         private void button2_Click(object sender, EventArgs e)
         {
             
-            
+           
             
         }
     }
