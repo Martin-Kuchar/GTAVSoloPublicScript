@@ -9,45 +9,24 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GTAVSoloPublicScript.Logic;
 
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        [DllImport("ntdll.dll", PreserveSig = false)]
-        public static extern void NtSuspendProcess(IntPtr processHandle);
-        [DllImport("ntdll.dll", PreserveSig = false)]
-        public static extern void NtResumeProcess(IntPtr processHandle);
+
+        Logic logic;
 
         public Form1()
         {
+            this.logic = new Logic();
             InitializeComponent();
-        }
-
-        private void suspend()
-        {
-            var processes = Process.GetProcessesByName("gta5");
-            foreach (var item in processes)
-            {
-                IntPtr h = item.Handle;
-                NtSuspendProcess(h);
-            }
-        }
-
-        private void resume()
-        {
-            var processes = Process.GetProcessesByName("gta5");
-            foreach (var item in processes)
-            {
-                IntPtr h = item.Handle;
-                NtResumeProcess(h);
-            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             soloPublic();
-            
         }
 
         private void soloPublic()
@@ -55,7 +34,7 @@ namespace WindowsFormsApp1
             this.button1.Enabled = false;
             this.label1.Text = "Creating solo public session";
 
-            this.suspend();
+            logic.suspend();
 
             this.timer1.Start(); 
         }
@@ -65,21 +44,15 @@ namespace WindowsFormsApp1
             this.button1.Enabled = true;
             this.label1.Text = "READY";
 
-            this.resume();
+            logic.resume();
 
             this.timer1.Stop();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var processes = Process.GetProcessesByName("gta5");
-            foreach (var item in processes)
-            {
-                item.Kill();
-            }
+            logic.kill();
         }
 
-
     }
-    
 }
