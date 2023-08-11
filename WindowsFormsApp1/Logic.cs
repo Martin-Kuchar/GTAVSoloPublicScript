@@ -36,5 +36,14 @@ namespace GTAVSoloPublicScript.Logic
                 NtResumeProcess(h);
             }
         }
+
+        public void kill()
+        {
+            var processes = Process.GetProcessesByName("gta5");
+            foreach (var item in processes)
+            {
+                item.Kill();
+            }
+        }
     }
 }
