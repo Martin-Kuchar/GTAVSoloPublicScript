@@ -62,7 +62,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(233, 92);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Heist Disconnect";
+            this.button2.Text = "Heist Disconnect\r\n(GTA will close)";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 

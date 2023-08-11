@@ -72,9 +72,14 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
-           
-            
+            var processes = Process.GetProcessesByName("gta5");
+            foreach (var item in processes)
+            {
+                item.Kill();
+            }
         }
+
+
     }
+    
 }
